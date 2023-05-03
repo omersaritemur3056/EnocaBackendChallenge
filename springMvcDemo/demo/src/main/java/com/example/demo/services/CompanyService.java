@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import java.util.List;
 
+import com.example.demo.models.Company;
 import com.example.demo.services.DTOs.requests.company.CreateCompanyDto;
 import com.example.demo.services.DTOs.requests.company.UpdateCompanyDto;
 import com.example.demo.services.DTOs.responses.company.CreatedCompanyResponse;
@@ -18,4 +19,6 @@ public interface CompanyService {
     DeletedCompanyResponse delete(String id);
 
     List<GetAllCompanyDto> getAll();
+
+    Company findCompanyById(String id);
 }

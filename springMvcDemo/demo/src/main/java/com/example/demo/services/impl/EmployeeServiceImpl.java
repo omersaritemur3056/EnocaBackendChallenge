@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Employee;
 import com.example.demo.repositories.EmployeeRepository;
+import com.example.demo.services.CompanyService;
 import com.example.demo.services.EmployeeService;
 import com.example.demo.services.DTOs.requests.employee.CreateEmployeeDto;
 import com.example.demo.services.DTOs.requests.employee.UpdateEmployeeDto;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final CompanyService companyService;
 
     @Override
     public CreatedEmployeeResponse add(CreateEmployeeDto createEmployeeDto) {
@@ -34,6 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setAge(createEmployeeDto.getAge());
         employee.setSalary(createEmployeeDto.getSalary());
         employee.setGender(createEmployeeDto.getGender());
+        employee.setCompany(companyService.findCompanyById(createEmployeeDto.getCompanyId()));
 
         Employee createdEmployee = employeeRepository.save(employee);
 
@@ -44,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         response.setAge(createdEmployee.getAge());
         response.setSalary(createdEmployee.getSalary());
         response.setGender(createdEmployee.getGender());
+        response.setCompanyId(createEmployeeDto.getCompanyId());
 
         return response;
     }
@@ -60,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setAge(updateEmployeeDto.getAge());
         employee.setSalary(updateEmployeeDto.getSalary());
         employee.setGender(updateEmployeeDto.getGender());
+        employee.setCompany(companyService.findCompanyById(updateEmployeeDto.getCompanyId()));
 
         Employee updatedEmployee = employeeRepository.save(employee);
 
@@ -70,6 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         response.setAge(updatedEmployee.getAge());
         response.setSalary(updatedEmployee.getSalary());
         response.setGender(updatedEmployee.getGender());
+        response.setCompanyId(updateEmployeeDto.getCompanyId());
 
         return response;
     }
@@ -86,6 +92,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         response.setAge(inDbEmployee.getAge());
         response.setSalary(inDbEmployee.getSalary());
         response.setGender(inDbEmployee.getGender());
+        response.setCompanyId(inDbEmployee.getCompany().getId());
 
         employeeRepository.delete(inDbEmployee);
 
@@ -104,6 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             dto.setAge(employee.getAge());
             dto.setSalary(employee.getSalary());
             dto.setGender(employee.getGender());
+            dto.setCompanyId(employee.getCompany().getId());
             response.add(dto);
         }
 

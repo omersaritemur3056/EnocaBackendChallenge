@@ -83,4 +83,10 @@ public class CompanyServiceImpl implements CompanyService {
         return response;
     }
 
+    @Override
+    public Company findCompanyById(String id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Entered companyId not found in DB!"));
+    }
+
 }
